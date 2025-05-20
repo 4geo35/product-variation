@@ -2,6 +2,8 @@
 
 namespace GIS\ProductVariation;
 
+use GIS\ProductVariation\Models\ProductVariation;
+use GIS\ProductVariation\Observers\ProductVariationObserver;
 use Illuminate\Support\ServiceProvider;
 
 class ProductVariationServiceProvider extends ServiceProvider
@@ -41,7 +43,9 @@ class ProductVariationServiceProvider extends ServiceProvider
 
     protected function observeModels(): void
     {
-
+        $variationModelClass = config("product-variation.customVariationModel") ?? ProductVariation::class;
+        $variationObserverClass = config("product-variation.customVariationModelObserver") ?? ProductVariationObserver::class;
+        $variationModelClass::observe($variationObserverClass);
     }
 
     protected function expandConfiguration(): void

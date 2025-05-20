@@ -1,3 +1,7 @@
 <?php
 
-return [];
+return [
+    // Admin
+    "customVariationModel" => null,
+    "customVariationModelObserver" => null,
+];
