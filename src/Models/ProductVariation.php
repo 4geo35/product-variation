@@ -28,6 +28,70 @@ class ProductVariation extends Model implements ProductVariationInterface
         return $this->belongsTo($productModelClass, "product_id");
     }
 
+    // TODO: items
+    // TODO: carts
+
+    public function getHumanPriceAttribute(): string
+    {
+        if ($this->price - intval($this->price) > 0)
+            return number_format($this->price, 2, ",", " ");
+        else
+            return number_format($this->price, 0, ",", " ");
+    }
+
+    public function getHumanOldPriceAttribute(): string
+    {
+        if ($this->old_price - intval($this->old_price) > 0)
+            return number_format($this->old_price ?? 0, 2, ",", " ");
+        else
+            return number_format($this->old_price ?? 0, 0, ",", " ");
+    }
+
+    public function getDiscountAttribute(): mixed
+    {
+        if ($this->sale)
+            return $this->old_price - $this->price;
+        else
+            return 0;
+    }
+
+    public function getHumanDiscountAttribute(): string
+    {
+        if ($this->discount - intval($this->discount) > 0)
+            return number_format($this->discount, 2, ",", " ");
+        else
+            return number_format($this->discount, 0, ",", " ");
+    }
+
+    public function getCartTotalAttribute(): float
+    {
+        if (empty($this->pivot)) return 0;
+        return $this->pivot->quantity * $this->price;
+    }
+
+    public function getHumanCartTotalAttribute(): string
+    {
+        if ($this->cart_total - intval($this->cart_total) > 0)
+            return number_format($this->cart_total, 2, ",", " ");
+        else
+            return number_format($this->cart_total, 0, ",", " ");
+    }
+
+    public function getCartOldTotalAttribute(): float
+    {
+        if (empty($this->pivot)) return 0;
+        if (empty($this->old_price)) return 0;
+        return $this->pivot->quantity * $this->old_price;
+    }
+
+    public function getHumanCartOldTotalAttribute(): string
+    {
+        if ($this->cart_old_total - intval($this->cart_old_total) > 0)
+            return number_format($this->cart_old_total, 2, ",", " ");
+        else
+            return number_format($this->cart_old_total, 0, ",", " ");
+    }
+
     public function fixSku(bool $updating = false): void
     {
         if ($updating && ($this->original["sku"] == $this->sku)) { return; }

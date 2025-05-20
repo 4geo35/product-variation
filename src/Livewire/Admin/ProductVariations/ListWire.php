@@ -82,6 +82,7 @@ class ListWire extends Component
         ]);
 
         session()->flash("variation-success", "Вариация успешно добавлена");
+        $this->closeData();
     }
 
     public function showEdit(int $variationId): void
