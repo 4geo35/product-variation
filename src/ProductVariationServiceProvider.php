@@ -5,6 +5,8 @@ namespace GIS\ProductVariation;
 use GIS\ProductVariation\Models\ProductVariation;
 use GIS\ProductVariation\Observers\ProductVariationObserver;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use GIS\ProductVariation\Livewire\Admin\ProductVariations\ListWire as AdminVariationListWire;
 
 class ProductVariationServiceProvider extends ServiceProvider
 {
@@ -50,11 +52,24 @@ class ProductVariationServiceProvider extends ServiceProvider
 
     protected function expandConfiguration(): void
     {
+        $pv = app()->config["product-variation"];
 
+        $um = app()->config["user-management"];
+        $permissions = $um["permissions"];
+        $permissions[] = [
+            "title" => $pv["variationPolicyTitle"],
+            "key" => $pv["variationPolicyKey"],
+            "policy" => $pv["variationPolicy"]
+        ];
+        app()->config["user-management.permissions"] = $permissions;
     }
 
     protected function addLivewireComponents(): void
     {
-
+        $component = config("product.variation.customAdminVariationListComponent");
+        Livewire::component(
+            "pv-admin-variation-list",
+            $component ?? AdminVariationListWire::class
+        );
     }
 }
