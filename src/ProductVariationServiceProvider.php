@@ -4,8 +4,10 @@ namespace GIS\ProductVariation;
 
 use GIS\ProductVariation\Livewire\Web\Catalog\ChooseVariationWire;
 use GIS\ProductVariation\Models\Order;
+use GIS\ProductVariation\Models\OrderItem;
 use GIS\ProductVariation\Models\OrderState;
 use GIS\ProductVariation\Models\ProductVariation;
+use GIS\ProductVariation\Observers\OrderItemObserver;
 use GIS\ProductVariation\Observers\OrderObserver;
 use GIS\ProductVariation\Observers\OrderStateObserver;
 use GIS\ProductVariation\Observers\ProductVariationObserver;
@@ -62,6 +64,10 @@ class ProductVariationServiceProvider extends ServiceProvider
         $orderModelClass = config("product-variation.customOrderModel") ?? Order::class;
         $orderObserverClass = config("product-variation.customOrderModelObserver") ?? OrderObserver::class;
         $orderModelClass::observe($orderObserverClass);
+
+        $itemModelClass = config("product-variation.customOrderItemModel") ?? OrderItem::class;
+        $itemObserverClass = config("product-variation.customOrderItemModelObserver") ?? OrderItemObserver::class;
+        $itemModelClass::observe($itemObserverClass);
     }
 
     protected function expandConfiguration(): void
