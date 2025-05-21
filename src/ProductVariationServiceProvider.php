@@ -3,11 +3,14 @@
 namespace GIS\ProductVariation;
 
 use GIS\ProductVariation\Livewire\Web\Catalog\ChooseVariationWire;
+use GIS\ProductVariation\Models\OrderState;
 use GIS\ProductVariation\Models\ProductVariation;
+use GIS\ProductVariation\Observers\OrderStateObserver;
 use GIS\ProductVariation\Observers\ProductVariationObserver;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use GIS\ProductVariation\Livewire\Admin\ProductVariations\ListWire as AdminVariationListWire;
+use NunoMaduro\Collision\Adapters\Phpunit\State;
 
 class ProductVariationServiceProvider extends ServiceProvider
 {
@@ -49,6 +52,10 @@ class ProductVariationServiceProvider extends ServiceProvider
         $variationModelClass = config("product-variation.customVariationModel") ?? ProductVariation::class;
         $variationObserverClass = config("product-variation.customVariationModelObserver") ?? ProductVariationObserver::class;
         $variationModelClass::observe($variationObserverClass);
+
+        $stateModelClass = config("product-variation.customOrderStateModel") ?? OrderState::class;
+        $stateObserverClass = config("product-variation.customOrderStateModelObserver") ?? OrderStateObserver::class;
+        $stateModelClass::observe($stateObserverClass);
     }
 
     protected function expandConfiguration(): void
@@ -61,6 +68,11 @@ class ProductVariationServiceProvider extends ServiceProvider
             "title" => $pv["variationPolicyTitle"],
             "key" => $pv["variationPolicyKey"],
             "policy" => $pv["variationPolicy"]
+        ];
+        $permissions[] = [
+            "title" => $pv["statePolicyTitle"],
+            "key" => $pv["statePolicyKey"],
+            "policy" => $pv["statePolicy"]
         ];
         app()->config["user-management.permissions"] = $permissions;
     }
