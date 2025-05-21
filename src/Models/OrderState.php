@@ -5,6 +5,7 @@ namespace GIS\ProductVariation\Models;
 use GIS\ProductVariation\Interfaces\OrderStateInterface;
 use GIS\TraitsHelpers\Traits\ShouldSlug;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class OrderState extends Model implements OrderStateInterface
@@ -17,7 +18,11 @@ class OrderState extends Model implements OrderStateInterface
         "slug",
     ];
 
-    // TODO: add orders
+    public function orders(): HasMany
+    {
+        $orderModelClass = config("product-variation.customOrderModel") ?? Order::class;
+        return $this->hasMany($orderModelClass, "state_id");
+    }
 
     public function fixKey($updating = false): void
     {

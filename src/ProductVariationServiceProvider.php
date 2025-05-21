@@ -3,8 +3,10 @@
 namespace GIS\ProductVariation;
 
 use GIS\ProductVariation\Livewire\Web\Catalog\ChooseVariationWire;
+use GIS\ProductVariation\Models\Order;
 use GIS\ProductVariation\Models\OrderState;
 use GIS\ProductVariation\Models\ProductVariation;
+use GIS\ProductVariation\Observers\OrderObserver;
 use GIS\ProductVariation\Observers\OrderStateObserver;
 use GIS\ProductVariation\Observers\ProductVariationObserver;
 use Illuminate\Support\ServiceProvider;
@@ -56,6 +58,10 @@ class ProductVariationServiceProvider extends ServiceProvider
         $stateModelClass = config("product-variation.customOrderStateModel") ?? OrderState::class;
         $stateObserverClass = config("product-variation.customOrderStateModelObserver") ?? OrderStateObserver::class;
         $stateModelClass::observe($stateObserverClass);
+
+        $orderModelClass = config("product-variation.customOrderModel") ?? Order::class;
+        $orderObserverClass = config("product-variation.customOrderModelObserver") ?? OrderObserver::class;
+        $orderModelClass::observe($orderObserverClass);
     }
 
     protected function expandConfiguration(): void
@@ -73,6 +79,11 @@ class ProductVariationServiceProvider extends ServiceProvider
             "title" => $pv["statePolicyTitle"],
             "key" => $pv["statePolicyKey"],
             "policy" => $pv["statePolicy"]
+        ];
+        $permissions[] = [
+            "title" => $pv["orderPolicyTitle"],
+            "key" => $pv["orderPolicyKey"],
+            "policy" => $pv["orderPolicy"]
         ];
         app()->config["user-management.permissions"] = $permissions;
     }

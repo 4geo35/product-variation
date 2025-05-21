@@ -1,12 +1,53 @@
 <?php
 
 return [
+    // Order settings
+    "orderNumberHasLetter" => true,
+    "orderDigitsLength" => 8,
+    "availableLetters" => "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+
+    // Filter
+    "priceFilterKey" => "product-price",
+    "priceSortReplaceNull" => 1000000000,
+
+    // Sort
+    "sortOptions" => [
+        "price.desc" => (object) [
+            "title" => "Сначала дорогие",
+            "by" => "price",
+            "direction" => "desc",
+            "ico" => "cp::web.catalog.sort.publish-down",
+        ],
+        "price.asc" => (object) [
+            "title" => "Сначала дешевые",
+            "by" => "price",
+            "direction" => "asc",
+            "ico" => "cp::web.catalog.sort.publish-up",
+        ]
+    ],
+
+    // Notifications
+    "clientNotifyEmails" => [],
+    "enableClientNotify" => true,
+
+    // Listeners
+    "customNewOrderListener" => null,
+
     // Admin
     "customVariationModel" => null,
     "customVariationModelObserver" => null,
 
     "customOrderStateModel" => null,
     "customOrderStateModelObserver" => null,
+
+    "customOrderModel" => null,
+    "customOrderModelObserver" => null,
+
+    "customOrderItemModel" => null,
+    "customOrderItemModelObserver" => null,
+
+    "customOrderCustomerModel" => null,
+    "customOrderCustomerModelObserver" => null,
 
     // Components
     "customAdminVariationListComponent" => null,
@@ -21,4 +62,8 @@ return [
     "statePolicy" => \GIS\ProductVariation\Policies\OrderStatePolicy::class,
     "statePolicyTitle" => "Управление статусами заказа",
     "statePolicyKey" => "order_states",
+
+    "orderPolicy" => \GIS\ProductVariation\Policies\OrderPolicy::class,
+    "orderPolicyKey" => "orders",
+    "orderPolicyTitle" => "Управление заказами",
 ];
