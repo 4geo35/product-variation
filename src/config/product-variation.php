@@ -8,6 +8,8 @@ return [
     // Components
     "customAdminVariationListComponent" => null,
 
+    "customWebChooseVariationComponent" => null,
+
     // Policy
     "variationPolicyTitle" => "Управление вариациями",
     "variationPolicy" => \GIS\ProductVariation\Policies\ProductVariationPolicy::class,

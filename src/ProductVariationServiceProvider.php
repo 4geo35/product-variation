@@ -2,6 +2,7 @@
 
 namespace GIS\ProductVariation;
 
+use GIS\ProductVariation\Livewire\Web\Catalog\ChooseVariationWire;
 use GIS\ProductVariation\Models\ProductVariation;
 use GIS\ProductVariation\Observers\ProductVariationObserver;
 use Illuminate\Support\ServiceProvider;
@@ -70,6 +71,12 @@ class ProductVariationServiceProvider extends ServiceProvider
         Livewire::component(
             "pv-admin-variation-list",
             $component ?? AdminVariationListWire::class
+        );
+
+        $component = config("product.variation.customWebChooseVariationComponent");
+        Livewire::component(
+            "pv-choose-variation",
+            $component ?? ChooseVariationWire::class
         );
     }
 }
