@@ -2,7 +2,10 @@
 
 namespace GIS\ProductVariation;
 
+use GIS\ProductVariation\Helpers\OrderActionsManager;
+use GIS\ProductVariation\Interfaces\ProductVariationInterface;
 use GIS\ProductVariation\Livewire\Web\Catalog\ChooseVariationWire;
+use GIS\ProductVariation\Livewire\Web\Catalog\OrderSingleVariationWire;
 use GIS\ProductVariation\Models\Order;
 use GIS\ProductVariation\Models\OrderItem;
 use GIS\ProductVariation\Models\OrderState;
@@ -38,12 +41,16 @@ class ProductVariationServiceProvider extends ServiceProvider
 
     protected function initFacades(): void
     {
-
+        $this->app->singleton("order-actions", function () {
+            $orderActionsManagerClass = config("product-variation.customOrderActionsManager") ?? OrderActionsManager::class;
+            return new $orderActionsManagerClass();
+        });
     }
 
     protected function bindInterfaces(): void
     {
-
+        $variationClass = config("product-variation.customVariationModel") ?? ProductVariation::class;
+        $this->app->bind(ProductVariationInterface::class, $variationClass);
     }
 
     protected function listenEvents(): void
@@ -112,6 +119,12 @@ class ProductVariationServiceProvider extends ServiceProvider
         Livewire::component(
             "pv-choose-variation",
             $component ?? ChooseVariationWire::class
+        );
+
+        $component = config("product-variation.customWebOrderSingleVariationComponent");
+        Livewire::component(
+            "pv-order-single-variation",
+            $component ?? OrderSingleVariationWire::class
         );
     }
 }

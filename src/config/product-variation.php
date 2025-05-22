@@ -52,11 +52,16 @@ return [
     "customAdminOrderController" => null,
     "customAdminOrderStateController" => null,
 
+    // Facades
+    "customProductVariationActionsManager" => null,
+    "customOrderActionsManager" => null,
+
     // Components
     "customAdminVariationListComponent" => null,
     "customAdminOrderStateListComponent" => null,
 
     "customWebChooseVariationComponent" => null,
+    "customWebOrderSingleVariationComponent" => null,
 
     // Policy
     "variationPolicyTitle" => "Управление вариациями",
