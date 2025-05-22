@@ -49,8 +49,12 @@ return [
     "customOrderCustomerModel" => null,
     "customOrderCustomerModelObserver" => null,
 
+    "customAdminOrderController" => null,
+    "customAdminOrderStateController" => null,
+
     // Components
     "customAdminVariationListComponent" => null,
+    "customAdminOrderStateListComponent" => null,
 
     "customWebChooseVariationComponent" => null,
 

@@ -14,7 +14,7 @@ use GIS\ProductVariation\Observers\ProductVariationObserver;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use GIS\ProductVariation\Livewire\Admin\ProductVariations\ListWire as AdminVariationListWire;
-use NunoMaduro\Collision\Adapters\Phpunit\State;
+use GIS\ProductVariation\Livewire\Admin\OrderStates\ListWire as AdminOrderStateListWire;
 
 class ProductVariationServiceProvider extends ServiceProvider
 {
@@ -96,13 +96,19 @@ class ProductVariationServiceProvider extends ServiceProvider
 
     protected function addLivewireComponents(): void
     {
-        $component = config("product.variation.customAdminVariationListComponent");
+        $component = config("product-variation.customAdminVariationListComponent");
         Livewire::component(
             "pv-admin-variation-list",
             $component ?? AdminVariationListWire::class
         );
 
-        $component = config("product.variation.customWebChooseVariationComponent");
+        $component = config("product-variation.customAdminOrderStateListComponent");
+        Livewire::component(
+            "pv-admin-order-states-list",
+            $component ?? AdminOrderStateListWire::class
+        );
+
+        $component = config("product-variation.customWebChooseVariationComponent");
         Livewire::component(
             "pv-choose-variation",
             $component ?? ChooseVariationWire::class
