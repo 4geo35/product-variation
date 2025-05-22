@@ -2,5 +2,5 @@
     <x-slot name="title">Статусы заказа</x-slot>
     <x-slot name="pageTitle">Статусы заказа</x-slot>
 
-    <livewire:pv-admin-order-states-list />
+    <livewire:pv-admin-order-states-index />
 </x-admin-layout>

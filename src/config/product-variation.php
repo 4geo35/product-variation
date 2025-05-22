@@ -58,7 +58,7 @@ return [
 
     // Components
     "customAdminVariationListComponent" => null,
-    "customAdminOrderStateListComponent" => null,
+    "customAdminOrderStateIndexComponent" => null,
 
     "customWebChooseVariationComponent" => null,
     "customWebOrderSingleVariationComponent" => null,

@@ -17,7 +17,7 @@ use GIS\ProductVariation\Observers\ProductVariationObserver;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use GIS\ProductVariation\Livewire\Admin\ProductVariations\ListWire as AdminVariationListWire;
-use GIS\ProductVariation\Livewire\Admin\OrderStates\ListWire as AdminOrderStateListWire;
+use GIS\ProductVariation\Livewire\Admin\OrderStates\IndexWire as AdminOrderStateIndexWire;
 
 class ProductVariationServiceProvider extends ServiceProvider
 {
@@ -109,10 +109,10 @@ class ProductVariationServiceProvider extends ServiceProvider
             $component ?? AdminVariationListWire::class
         );
 
-        $component = config("product-variation.customAdminOrderStateListComponent");
+        $component = config("product-variation.customAdminOrderStateIndexComponent");
         Livewire::component(
-            "pv-admin-order-states-list",
-            $component ?? AdminOrderStateListWire::class
+            "pv-admin-order-states-index",
+            $component ?? AdminOrderStateIndexWire::class
         );
 
         $component = config("product-variation.customWebChooseVariationComponent");

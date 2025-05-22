@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class ListWire extends Component
+class IndexWire extends Component
 {
     public string $searchTitle = "";
 
@@ -65,7 +65,7 @@ class ListWire extends Component
         $states = $query
             ->orderBy("title")
             ->get();
-        return view("pv::livewire.admin.order-states.list-wire", compact("states"));
+        return view("pv::livewire.admin.order-states.index-wire", compact("states"));
     }
 
     public function clearSearch(): void
