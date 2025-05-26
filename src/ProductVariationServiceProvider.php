@@ -106,6 +106,11 @@ class ProductVariationServiceProvider extends ServiceProvider
             "policy" => $pv["orderPolicy"]
         ];
         app()->config["user-management.permissions"] = $permissions;
+
+        // Sort options
+        $sortOptions = $this->app->config["category-product.sortOptions"];
+        $sortOptions = array_merge($sortOptions, config("product-variation.sortOptions"));
+        app()->config["category-product.sortOptions"] = $sortOptions;
     }
 
     protected function addLivewireComponents(): void
