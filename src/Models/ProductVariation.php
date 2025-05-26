@@ -8,6 +8,7 @@ use GIS\TraitsHelpers\Traits\ShouldHumanDate;
 use GIS\TraitsHelpers\Traits\ShouldHumanPublishDate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProductVariation extends Model implements ProductVariationInterface
 {
@@ -28,7 +29,12 @@ class ProductVariation extends Model implements ProductVariationInterface
         return $this->belongsTo($productModelClass, "product_id");
     }
 
-    // TODO: items
+    public function items(): HasMany
+    {
+        $orderItemModelClass = config("product-variation.customOrderItemModel") ?? OrderItem::class;
+        return $this->hasMany($orderItemModelClass, "variation_id");
+    }
+
     // TODO: carts
 
     public function getHumanPriceAttribute(): string

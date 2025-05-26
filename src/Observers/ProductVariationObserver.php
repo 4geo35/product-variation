@@ -5,6 +5,7 @@ namespace GIS\ProductVariation\Observers;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\ProductVariation\Facades\ProductVariationActions;
+use GIS\ProductVariation\Interfaces\OrderItemInterface;
 use GIS\ProductVariation\Interfaces\ProductVariationInterface;
 
 class ProductVariationObserver
@@ -34,7 +35,14 @@ class ProductVariationObserver
     public function deleted(ProductVariationInterface $variation): void
     {
         $this->forgetPriceCache($variation);
-        // Clear order items
+
+        foreach ($variation->items as $item) {
+            /**
+             * @var OrderItemInterface $item
+             */
+            $item->variation()->disassociate();
+            $item->save();
+        }
     }
 
     protected function forgetPriceCache(ProductVariationInterface $variation): void
