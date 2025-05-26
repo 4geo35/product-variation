@@ -3,6 +3,7 @@
 namespace GIS\ProductVariation;
 
 use GIS\ProductVariation\Helpers\OrderActionsManager;
+use GIS\ProductVariation\Helpers\ProductVariationActionsManager;
 use GIS\ProductVariation\Interfaces\ProductVariationInterface;
 use GIS\ProductVariation\Livewire\Web\Catalog\ChooseVariationWire;
 use GIS\ProductVariation\Livewire\Web\Catalog\OrderSingleVariationWire;
@@ -45,6 +46,11 @@ class ProductVariationServiceProvider extends ServiceProvider
         $this->app->singleton("order-actions", function () {
             $orderActionsManagerClass = config("product-variation.customOrderActionsManager") ?? OrderActionsManager::class;
             return new $orderActionsManagerClass();
+        });
+
+        $this->app->singleton("product-variation-actions", function () {
+            $variationActionsManagerClass = config("product-variation.customProductVariationActionsManager") ?? ProductVariationActionsManager::class;
+            return new $variationActionsManagerClass();
         });
     }
 
