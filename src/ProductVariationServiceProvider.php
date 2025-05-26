@@ -2,9 +2,11 @@
 
 namespace GIS\ProductVariation;
 
+use GIS\ProductVariation\Events\CreateNewOrderEvent;
 use GIS\ProductVariation\Helpers\OrderActionsManager;
 use GIS\ProductVariation\Helpers\ProductVariationActionsManager;
 use GIS\ProductVariation\Interfaces\ProductVariationInterface;
+use GIS\ProductVariation\Listeners\SendNewOrderNotifyListener;
 use GIS\ProductVariation\Livewire\Web\Catalog\ChooseVariationWire;
 use GIS\ProductVariation\Livewire\Web\Catalog\OrderSingleVariationWire;
 use GIS\ProductVariation\Models\Order;
@@ -15,6 +17,7 @@ use GIS\ProductVariation\Observers\OrderItemObserver;
 use GIS\ProductVariation\Observers\OrderObserver;
 use GIS\ProductVariation\Observers\OrderStateObserver;
 use GIS\ProductVariation\Observers\ProductVariationObserver;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use GIS\ProductVariation\Livewire\Admin\ProductVariations\ListWire as AdminVariationListWire;
@@ -62,7 +65,8 @@ class ProductVariationServiceProvider extends ServiceProvider
 
     protected function listenEvents(): void
     {
-
+        $listenerClass = config("product-variation.customNewOrderListener") ?? SendNewOrderNotifyListener::class;
+        Event::listen(CreateNewOrderEvent::class, $listenerClass);
     }
 
     protected function observeModels(): void

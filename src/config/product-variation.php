@@ -27,7 +27,7 @@ return [
     ],
 
     // Notifications
-    "clientNotifyEmails" => [],
+    "clientNotifyEmails" => env("CLIENT_ORDER_NOTIFICATION_EMAILS"),
     "enableClientNotify" => true,
 
     // Listeners

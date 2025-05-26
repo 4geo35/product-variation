@@ -27,7 +27,7 @@ class Order extends Model implements OrderInterface
 
     public function routeNotificationForMail(Notification $notification): array
     {
-        return config("product-variation.clientNotifyEmails");
+        return explode(",", config("product-variation.clientNotifyEmails"));
     }
 
     public function state(): BelongsTo
