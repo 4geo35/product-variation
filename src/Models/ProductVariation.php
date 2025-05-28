@@ -2,12 +2,14 @@
 
 namespace GIS\ProductVariation\Models;
 
+use GIS\VariationCart\Models\Cart;
 use GIS\CategoryProduct\Models\Product;
 use GIS\ProductVariation\Interfaces\ProductVariationInterface;
 use GIS\TraitsHelpers\Traits\ShouldHumanDate;
 use GIS\TraitsHelpers\Traits\ShouldHumanPublishDate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProductVariation extends Model implements ProductVariationInterface
@@ -35,7 +37,17 @@ class ProductVariation extends Model implements ProductVariationInterface
         return $this->hasMany($orderItemModelClass, "variation_id");
     }
 
-    // TODO: carts
+    public function carts(): BelongsToMany
+    {
+        if (config("variation-cart")) {
+            $cartModelClass = config("variation-cart.customCartModel") ?? Cart::class;
+            return $this->belongsToMany($cartModelClass)
+                ->withPivot("quantity")
+                ->withTimestamps();
+        } else {
+            return new BelongsToMany($this->newQuery(), $this, "", "", "", "", "");
+        }
+    }
 
     public function getHumanPriceAttribute(): string
     {

@@ -15,18 +15,22 @@
         @foreach($orders as $item)
             <tr>
                 <td>{{ $item->number }}</td>
-                <td>
-                    <ul class="space-y-indent-half">
-                        <li>Имя: {{ $item->customer->name }}</li>
-                        @if ($item->customer->phone)
-                            <li>Телефон: <a href="tel:{{ $item->customer->phone }}" class="hover:text-primary-hover">{{ $item->customer->phone }}</a></li>
-                        @endif
-                        @if ($item->customer->email)
-                            <li>Email: <a href="mailto:{{ $item->customer->email }}" class="hover:text-primary-hover">{{ $item->customer->email }}</a></li>
-                        @endif
-                    </ul>
-                </td>
-                <td>{{ $item->customer->comment }}</td>
+                @if ($item->customer)
+                    <td>
+                        <ul class="space-y-indent-half">
+                            <li>Имя: {{ $item->customer->name }}</li>
+                            @if ($item->customer->phone)
+                                <li>Телефон: <a href="tel:{{ $item->customer->phone }}" class="hover:text-primary-hover">{{ $item->customer->phone }}</a></li>
+                            @endif
+                            @if ($item->customer->email)
+                                <li>Email: <a href="mailto:{{ $item->customer->email }}" class="hover:text-primary-hover">{{ $item->customer->email }}</a></li>
+                            @endif
+                        </ul>
+                    </td>
+                    <td>{{ $item->customer->comment }}</td>
+                @else
+                    <td colspan="2">Не найдены данные пользователя</td>
+                @endif
                 <td>
                     <ul class="space-y-indent-half">
                         @foreach($item->items as $orderItem)
