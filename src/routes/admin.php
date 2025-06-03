@@ -13,6 +13,7 @@ Route::middleware(["web", "auth", "app-management"])
             ->group(function () {
                 $orderControllerClass = config("product-variation.customAdminOrderController") ?? OrderController::class;
                 Route::get("/", [$orderControllerClass, "index"])->name("index");
+                Route::get("/{order}", [$orderControllerClass, "show"])->name("show");
             });
 
         Route::prefix("order-states")

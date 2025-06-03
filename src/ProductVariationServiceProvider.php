@@ -5,6 +5,7 @@ namespace GIS\ProductVariation;
 use GIS\ProductVariation\Events\CreateNewOrderEvent;
 use GIS\ProductVariation\Helpers\OrderActionsManager;
 use GIS\ProductVariation\Helpers\ProductVariationActionsManager;
+use GIS\ProductVariation\Interfaces\OrderInterface;
 use GIS\ProductVariation\Interfaces\ProductVariationInterface;
 use GIS\ProductVariation\Listeners\SendNewOrderNotifyListener;
 use GIS\ProductVariation\Livewire\Web\Catalog\ChooseVariationWire;
@@ -61,6 +62,9 @@ class ProductVariationServiceProvider extends ServiceProvider
     {
         $variationClass = config("product-variation.customVariationModel") ?? ProductVariation::class;
         $this->app->bind(ProductVariationInterface::class, $variationClass);
+
+        $orderClass = config("product-variation.customOrderModel") ?? Order::class;
+        $this->app->bind(OrderInterface::class, $orderClass);
     }
 
     protected function listenEvents(): void

@@ -66,7 +66,17 @@
                 </td>
                 <td>
                     <div class="flex justify-center">
-                        <button type="button" class="btn btn-danger px-btn-x-ico"
+                        @can("viewAny", $item::class)
+                            <a href="{{ route('admin.orders.show', ['order' => $item]) }}"
+                               class="btn btn-primary px-btn-ico-text rounded-e-none">
+                                <x-tt::ico.eye />
+                            </a>
+                        @else
+                            <button type="button" class="btn btn-primary px-btn-x-ico rounded-e-none" disabled>
+                                <x-tt::ico.eye />
+                            </button>
+                        @endcan
+                        <button type="button" class="btn btn-danger px-btn-x-ico rounded-s-none"
                                 wire:loading.attr="disabled"
                                 wire:click="showDelete({{ $item->id }})">
                             <x-tt::ico.trash />
