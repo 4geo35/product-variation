@@ -61,6 +61,7 @@ return [
     "customAdminOrderStateIndexComponent" => null,
     "customAdminOrderIndexComponent" => null,
     "customAdminManageCustomerComponent" => null,
+    "customAdminManageItemsComponent" => null,
 
     "customWebChooseVariationComponent" => null,
     "customWebOrderSingleVariationComponent" => null,
