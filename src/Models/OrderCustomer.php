@@ -2,10 +2,11 @@
 
 namespace GIS\ProductVariation\Models;
 
+use GIS\ProductVariation\Interfaces\OrderCustomerInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class OrderCustomer extends Model
+class OrderCustomer extends Model implements OrderCustomerInterface
 {
     protected $fillable = [
         "name",

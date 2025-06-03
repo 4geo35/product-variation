@@ -9,7 +9,7 @@
         );
 
     $orderActive = in_array(Route::currentRouteName(), [
-        "admin.orders.index",
+        "admin.orders.index", "admin.orders.show",
     ]);
     $canViewOrders = \Illuminate\Support\Facades\Auth::user()
         ->can(

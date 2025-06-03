@@ -8,6 +8,7 @@ use GIS\ProductVariation\Helpers\ProductVariationActionsManager;
 use GIS\ProductVariation\Interfaces\OrderInterface;
 use GIS\ProductVariation\Interfaces\ProductVariationInterface;
 use GIS\ProductVariation\Listeners\SendNewOrderNotifyListener;
+use GIS\ProductVariation\Livewire\Admin\Orders\ManageCustomerWire;
 use GIS\ProductVariation\Livewire\Web\Catalog\ChooseVariationWire;
 use GIS\ProductVariation\Livewire\Web\Catalog\OrderSingleVariationWire;
 use GIS\ProductVariation\Models\Order;
@@ -139,6 +140,12 @@ class ProductVariationServiceProvider extends ServiceProvider
         Livewire::component(
             "pv-admin-orders-index",
             $component ?? AdminOrderIndexWire::class
+        );
+
+        $component = config("product-variation.customAdminManageCustomerComponent");
+        Livewire::component(
+            "pv-admin-manage-customer",
+            $component ?? ManageCustomerWire::class
         );
 
         $component = config("product-variation.customWebChooseVariationComponent");
