@@ -4,10 +4,10 @@
 
     <div class="flex flex-col gap-y-indent">
         <div class="row gap-y-indent lg:gap-y-0">
-            <div class="col w-full lg:w-1/2 h-full order-last lg:order-first">
+            <div class="col w-full lg:w-1/2 order-last lg:order-first">
                 <livewire:pv-admin-manage-customer :order="$order" />
             </div>
-            <div class="col w-full lg:w-1/2 h-full">
+            <div class="col w-full lg:w-1/2">
                 <livewire:pv-admin-order-info :order="$order" />
             </div>
         </div>

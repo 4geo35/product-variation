@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card h-full">
     <div class="card-header">
         <div class="flex justify-between items-center overflow-x-auto beautify-scrollbar">
             <h2 class="font-medium text-2xl text-nowrap mr-indent-half">Данные заказа</h2>

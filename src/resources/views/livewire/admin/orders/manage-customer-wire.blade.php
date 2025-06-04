@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card h-full">
     <div class="card-header">
         <div class="space-y-indent-half">
             @include("pv::admin.order-customers.includes.show-title")
