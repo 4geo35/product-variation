@@ -6,6 +6,7 @@ use GIS\ProductVariation\Interfaces\OrderInterface;
 use GIS\ProductVariation\Interfaces\OrderStateInterface;
 use GIS\ProductVariation\Models\Order;
 use GIS\ProductVariation\Models\OrderState;
+use GIS\ProductVariation\Traits\StateActions;
 use GIS\TraitsHelpers\Facades\BuilderActions;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
@@ -14,18 +15,14 @@ use Livewire\WithPagination;
 
 class IndexWire extends Component
 {
-    use WithPagination;
+    use WithPagination, StateActions;
 
     public string $searchNumber = "";
     public string $searchEmail = "";
     public string $searchPhone = "";
 
     public bool $displayDelete = false;
-    public bool $displayState = false;
-    public int|null $orderId = null;
-    public int|null $stateId = null;
 
-    public Collection $orderStates;
 
     public function mount(): void
     {
@@ -61,35 +58,6 @@ class IndexWire extends Component
     {
         $this->reset("searchNumber", "searchEmail", "searchPhone");
         $this->resetPage();
-    }
-
-    public function editStatus(int $orderId): void
-    {
-        $this->resetFields();
-        $this->orderId = $orderId;
-        $order = $this->findOrder();
-        if (! $order) return;
-        $this->displayState = true;
-        $this->stateId = $order->state_id;
-        $this->setStates();
-    }
-
-    public function closeState(): void
-    {
-        $this->displayState = false;
-        $this->resetFields();
-    }
-
-    public function saveState(): void
-    {
-        $order = $this->findOrder();
-        if (! $order) return;
-        $state = $this->findState();
-        if (! $state) return;
-        $order->state()->associate($state);
-        $order->save();
-        session()->flash("success", "Статус изменен");
-        $this->closeState();
     }
 
     public function showDelete(int $orderId): void
@@ -130,29 +98,8 @@ class IndexWire extends Component
         return $order;
     }
 
-    protected function findState(): ?OrderStateInterface
-    {
-        $orderStateClass = config("product-variation.customOrderStateModel") ?? OrderState::class;
-        $state = $orderStateClass::find($this->stateId);
-        if (! $state) {
-            session()->flash("error", "Статус не найден");
-            $this->closeState();
-            return null;
-        }
-        return $state;
-    }
-
     protected function resetFields(): void
     {
         $this->reset(["orderId", "stateId"]);
-    }
-
-    protected function setStates(): void
-    {
-        $orderStateClass = config("product-variation.customOrderStateModel") ?? OrderState::class;
-        $this->orderStates = $orderStateClass::query()
-            ->select("id", "title")
-            ->orderBy("title")
-            ->get();
     }
 }

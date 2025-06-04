@@ -53,13 +53,13 @@
                                     <option value="{{ $state->id }}">{{ $state->title }}</option>
                                 @endforeach
                             </select>
-                            <button type="button" class="btn btn-sm px-btn-x-ico btn-outline-secondary" wire:click="closeState">
+                            <button type="button" class="btn btn-sm px-btn-x-ico btn-outline-secondary cursor-pointer" wire:click="closeState">
                                 <x-tt::ico.cross />
                             </button>
-                            <button type="button" class="btn btn-sm px-btn-x-ico btn-outline-success" wire:click="saveState">ОК</button>
+                            <button type="button" class="btn btn-sm px-btn-x-ico btn-outline-success cursor-pointer" wire:click="saveState">ОК</button>
                         </div>
                     @else
-                        <button type="button" class="text-primary hover:text-primary-hover" wire:click="editStatus({{ $item->id }})">
+                        <button type="button" class="text-primary hover:text-primary-hover cursor-pointer" wire:click="editStatus({{ $item->id }})">
                             {{ $item->state->title }}
                         </button>
                     @endif

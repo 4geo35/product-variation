@@ -68,6 +68,7 @@ class MangeItemsWire extends Component
 
     public function decreaseQuantity(): void
     {
+        if ($this->quantity <= 1) { return; }
         $this->quantity--;
     }
 
