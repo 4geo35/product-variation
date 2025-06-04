@@ -4,7 +4,7 @@
             <x-tt::table.heading class="text-left">Товар</x-tt::table.heading>
             <x-tt::table.heading class="text-left">SKU</x-tt::table.heading>
             <x-tt::table.heading class="text-left">Цена</x-tt::table.heading>
-            <x-tt::table.heading class="text-left">Количество</x-tt::table.heading>
+            <x-tt::table.heading class="text-center">Количество</x-tt::table.heading>
             <x-tt::table.heading class="text-left">Итого</x-tt::table.heading>
             <x-tt::table.heading class="text-left">Действия</x-tt::table.heading>
         </tr>
@@ -55,14 +55,26 @@
                             </div>
                         </div>
                     @else
-                        <button type="button" wire:click="showEditQuantity({{ $item->id }})"
-                                class="cursor-pointer text-primary hover:text-primary-hover">
-                            {{ $item->quantity }}
-                        </button>
+                        <div class="flex items-center justify-center">
+                            <button type="button" wire:click="showEditQuantity({{ $item->id }})"
+                                    class="cursor-pointer text-primary hover:text-primary-hover">
+                                {{ $item->quantity }}
+                            </button>
+                        </div>
                     @endif
                 </td>
                 <td><span class="text-nowrap">{{ $item->human_total }} руб.</span></td>
-                <td></td>
+                <td>
+                    <div class="flex items-center justify-center">
+                        <button type="button" class="btn btn-danger px-btn-x-ico"
+                                @cannot("update", $order) disabled
+                                @else wire:loading.attr="disabled"
+                                @endcannot
+                                wire:click="showDelete({{ $item->id }})">
+                            <x-tt::ico.trash />
+                        </button>
+                    </div>
+                </td>
             </tr>
         @endforeach
     </x-slot>
