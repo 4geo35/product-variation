@@ -3,11 +3,11 @@
     <x-slot name="pageTitle">Заказ {{ $order->number }}</x-slot>
 
     <div class="flex flex-col gap-y-indent">
-        <div class="row">
-            <div class="col w-1/2">
+        <div class="row gap-y-indent lg:gap-y-0">
+            <div class="col w-full lg:w-1/2 h-full order-last lg:order-first">
                 <livewire:pv-admin-manage-customer :order="$order" />
             </div>
-            <div class="col w-1/2">
+            <div class="col w-full lg:w-1/2 h-full">
                 <livewire:pv-admin-order-info :order="$order" />
             </div>
         </div>
