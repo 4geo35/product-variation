@@ -64,7 +64,7 @@ class OrderActionsManager
             $id = $orderItem->variation_id;
             $quantity = $variationsInfo[$id]->quantity;
             $this->changeOrderItemQuantity($orderItem, $quantity);
-            if ($orderItem->price !== $variationsInfo[$id]->price) {
+            if (!empty($variationsInfo[$id]->price) && ($orderItem->price !== $variationsInfo[$id]->price)) {
                 $orderItem->price = $variationsInfo[$id]->price;
                 $orderItem->save();
             }
