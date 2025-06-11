@@ -21,6 +21,7 @@ use GIS\ProductVariation\Observers\OrderObserver;
 use GIS\ProductVariation\Observers\OrderStateObserver;
 use GIS\ProductVariation\Observers\ProductVariationObserver;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use GIS\ProductVariation\Livewire\Admin\ProductVariations\ListWire as AdminVariationListWire;
@@ -45,7 +46,15 @@ class ProductVariationServiceProvider extends ServiceProvider
         $this->addLivewireComponents();
         $this->expandConfiguration();
         $this->observeModels();
+        $this->setPolicies();
         $this->listenEvents();
+    }
+
+    protected function setPolicies(): void
+    {
+        Gate::policy(config("product-variation.customVariationModel") ?? ProductVariation::class, config("product-variation.variationPolicy"));
+        Gate::policy(config("product-variation.customOrderStateModel") ?? OrderState::class, config("product-variation.statePolicy"));
+        Gate::policy(config("product-variation.customOrderModel") ?? Order::class, config("product-variation.orderPolicy"));
     }
 
     protected function initFacades(): void
