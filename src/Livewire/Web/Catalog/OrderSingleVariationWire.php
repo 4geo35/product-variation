@@ -4,7 +4,9 @@ namespace GIS\ProductVariation\Livewire\Web\Catalog;
 
 use GIS\ProductVariation\Facades\OrderActions;
 use GIS\ProductVariation\Interfaces\OrderInterface;
+use GIS\ProductVariation\Interfaces\ProductVariationInterface;
 use GIS\ProductVariation\Models\Order;
+use GIS\ProductVariation\Models\ProductVariation;
 use GIS\ProductVariation\Traits\InitFirstVariation;
 use Illuminate\View\View;
 use Livewire\Attributes\On;
@@ -12,7 +14,8 @@ use Livewire\Component;
 
 class OrderSingleVariationWire extends Component
 {
-    use InitFirstVariation;
+    public int|null $variationId = null;
+    public null|ProductVariationInterface $variation = null;
 
     public bool $displayData = false;
 
@@ -44,25 +47,17 @@ class OrderSingleVariationWire extends Component
         ];
     }
 
-    public function mount(): void
-    {
-        $this->setFirstVariation();
-    }
-
     public function render(): View
     {
         return view('pv::livewire.web.catalog.order-single-variation-wire');
     }
 
-    #[On("switch-variation")]
-    public function setVariation(int $id): void
+    #[On("show-single-variation-modal")]
+    public function showOrder(int $id): void
     {
-        $this->variation = $this->variations->find($id);
         $this->variationId = $id;
-    }
-
-    public function showOrder(): void
-    {
+        $this->findVariation();
+        if (! $this->variation) { return; }
         $this->displayData = true;
     }
 
@@ -70,6 +65,7 @@ class OrderSingleVariationWire extends Component
     {
         $this->displayData = false;
         $this->resetFields();
+        $this->reset("variationId", "variation");
     }
 
     public function store(): void
@@ -103,5 +99,15 @@ class OrderSingleVariationWire extends Component
             "phone" => $this->phone,
             "comment" => $this->comment,
         ]);
+    }
+
+    protected function findVariation(): void
+    {
+        try {
+            $modelClass = config("product-variation.customVariationModel") ?? ProductVariation::class;
+            $this->variation = $modelClass::where("id", $this->variationId)->with("product")->first();
+        } catch (\Exception $exception) {
+            $this->variation = null;
+        }
     }
 }

@@ -32,6 +32,6 @@ class ShowOrderSingleVariationButtonWire extends Component
 
     public function showModal(): void
     {
-        debugbar()->info($this->variation);
+        $this->dispatch("show-single-variation-modal", id: $this->variationId);
     }
 }
