@@ -15,7 +15,7 @@ trait InitFirstVariation
 
     protected function setFirstVariation(): void
     {
-        $this->variations = $this->product->variations()->whereNotNull("published_at")->orderBy("price")->get();
+        $this->variations = $this->product->orderedVariations;
         if ($this->variations->count() > 0) {
             $this->variation = $this->variations->first();
             $this->variationId = $this->variation->id;

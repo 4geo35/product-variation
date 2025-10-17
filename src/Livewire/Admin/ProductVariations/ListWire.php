@@ -29,10 +29,10 @@ class ListWire extends Component
         $uniqueCondition = "unique:product_variations,sku";
         if ($this->variationId) $uniqueCondition .= ",{$this->variationId}";
         return [
+            "title" => ["required", "string", "max:150"],
             "price" => ["required", "numeric", "min:0"],
             "oldPrice" => ["nullable", "numeric", "min:0"],
             "sku" => ["nullable", "string", "max:150", $uniqueCondition],
-            "title" => ["nullable", "string", "max:150"]
         ];
     }
 

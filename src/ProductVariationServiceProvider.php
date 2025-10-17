@@ -12,6 +12,7 @@ use GIS\ProductVariation\Livewire\Admin\Orders\ManageCustomerWire;
 use GIS\ProductVariation\Livewire\Admin\Orders\MangeItemsWire;
 use GIS\ProductVariation\Livewire\Web\Catalog\ChooseVariationWire;
 use GIS\ProductVariation\Livewire\Web\Catalog\OrderSingleVariationWire;
+use GIS\ProductVariation\Livewire\Web\Catalog\ProductTeaserChooseVariationWire;
 use GIS\ProductVariation\Models\Order;
 use GIS\ProductVariation\Models\OrderItem;
 use GIS\ProductVariation\Models\OrderState;
@@ -181,6 +182,12 @@ class ProductVariationServiceProvider extends ServiceProvider
         Livewire::component(
             "pv-order-single-variation",
             $component ?? OrderSingleVariationWire::class
+        );
+
+        $component = config("product-variation.customWebTeaserChooseVariationComponent");
+        Livewire::component(
+            "pv-teaser-choose-variation",
+            $component ?? ProductTeaserChooseVariationWire::class
         );
     }
 }

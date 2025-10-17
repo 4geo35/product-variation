@@ -2,6 +2,7 @@
 
 namespace GIS\ProductVariation\Observers;
 
+use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\ProductVariation\Facades\ProductVariationActions;
@@ -56,5 +57,6 @@ class ProductVariationObserver
          * @var CategoryInterface $category
          */
         ProductVariationActions::forgetPricesForCategory($category);
+        ProductActions::forgetTeaserData($product->id);
     }
 }

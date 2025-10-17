@@ -11,8 +11,19 @@
         <form wire:submit.prevent="{{ $variationId ? 'update' : 'store' }}"
               class="space-y-indent-half" id="variationDataForm">
             <div>
+                <label for="variationTitle" class="inline-block mb-2">
+                    Заголовок<span class="text-danger">*</span>
+                </label>
+                <input type="text" id="variationTitle" required
+                       class="form-control {{ $errors->has("title") ? "border-danger" : "" }}"
+                       wire:loading.attr="disabled"
+                       wire:model="title">
+                <x-tt::form.error name="title"/>
+            </div>
+
+            <div>
                 <label for="variationPrice" class="inline-block mb-2">
-                    Цена <span class="text-danger">*</span>
+                    Цена<span class="text-danger">*</span>
                 </label>
                 <input type="number" id="variationPrice" min="0" step=".01"
                        class="form-control {{ $errors->has("price") ? "border-danger" : "" }}"
@@ -51,17 +62,6 @@
                        wire:model="sku">
                 <x-tt::form.error name="sku"/>
                 <div class="text-sm text-secondary">Если оставить пустым, сформируется автоматически</div>
-            </div>
-
-            <div>
-                <label for="variationTitle" class="inline-block mb-2">
-                    Заголовок
-                </label>
-                <input type="text" id="variationTitle"
-                       class="form-control {{ $errors->has("title") ? "border-danger" : "" }}"
-                       wire:loading.attr="disabled"
-                       wire:model="title">
-                <x-tt::form.error name="title"/>
             </div>
 
             <div class="flex items-center space-x-indent-half">
