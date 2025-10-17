@@ -67,6 +67,7 @@ return [
     "customWebChooseVariationComponent" => null,
     "customWebOrderSingleVariationComponent" => null,
     "customWebTeaserChooseVariationComponent" => null,
+    "customWebShowOrderSingleVariationButtonComponent" => null,
 
     // Policy
     "variationPolicyTitle" => "Управление вариациями",

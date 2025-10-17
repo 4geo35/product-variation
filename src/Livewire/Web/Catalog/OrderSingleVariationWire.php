@@ -20,7 +20,7 @@ class OrderSingleVariationWire extends Component
     public string $email = "";
     public string $phone = "";
     public string $comment = "";
-    public bool $policy = true;
+    public bool $policy = false;
 
     public function rules(): array
     {
