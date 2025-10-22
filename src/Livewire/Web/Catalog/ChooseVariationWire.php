@@ -28,6 +28,6 @@ class ChooseVariationWire extends Component
 
     protected function changeVariationEvent(): void
     {
-        $this->dispatch("switch-variation", $this->variationId);
+        $this->dispatch("switch-variation", $this->variationId, $this->product->id);
     }
 }

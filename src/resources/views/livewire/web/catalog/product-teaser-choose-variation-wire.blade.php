@@ -3,9 +3,9 @@
 <div class="{{ $moreVariations >= 0 ? 'mt-indent-half' : '' }}">
     @if ($variation)
         <div class="flex flex-wrap items-end">
-            <div class="text-lg lg:text-2xl font-semibold mr-indent-half lg:mb-1.5">{{ $variation->human_price }} руб</div>
+            <div class="text-lg lg:text-2xl font-semibold mr-indent-half lg:mb-1.5">{{ $variation->human_price }} р.</div>
             @if ($variation->sale)
-                <div class="lg:text-lg font-medium text-body/60 line-through lg:mb-1.5">{{ $variation->human_old_price }} руб</div>
+                <div class="lg:text-lg font-medium text-body/60 line-through lg:mb-1.5">{{ $variation->human_old_price }} р.</div>
             @endif
         </div>
     @endif
@@ -21,7 +21,7 @@
                 @foreach($variations as $item)
                     <div class="group">
                         <input class="hidden peer" id="productVariation-{{ $item->sku }}"
-                               type="radio" name="productVariation" value="{{ $item->id }}" wire:model.live="variationId">
+                               type="radio" name="productVariation-{{ $item->product_id }}" value="{{ $item->id }}" wire:model.live="variationId">
                         <label class="flex items-center justify-between w-full px-indent-half py-1.5 text-sm font-semibold hover:bg-primary/5 cursor-pointer peer-checked:bg-primary/5 peer-checked:text-body/60 peer-checked:after:content-['✓'] peer-checked:after:ml-indent-half"
                                for="productVariation-{{ $item->sku }}" @click="show = false">
                             <span class="text-nowrap truncate">{{ $item->title }}</span>
