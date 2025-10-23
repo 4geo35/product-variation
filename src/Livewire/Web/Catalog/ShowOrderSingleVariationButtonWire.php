@@ -25,6 +25,7 @@ class ShowOrderSingleVariationButtonWire extends Component
     public function setVariation(int $variationId, int $productId): void
     {
         if ($this->product->id !== $productId) { return; }
+        $this->reset("variationId");
         $this->variation = $this->variations->find($variationId);
         if (!$this->variation) { return; }
         $this->variationId = $variationId;
