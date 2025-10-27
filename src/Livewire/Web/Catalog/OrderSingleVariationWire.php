@@ -24,15 +24,17 @@ class OrderSingleVariationWire extends Component
     public string $phone = "";
     public string $comment = "";
     public bool $policy = false;
+    public string $hidden = "";
 
     public function rules(): array
     {
         return [
             "name" => ["required", "string", "max:150"],
-            "email" => ["required_without:phone", "string", "email", "max:150"],
+            "email" => ["required_without:phone", "string", "email:dns", "max:150"],
             "phone" => ["required_without:email", "string", "max:150"],
             "comment" => ["nullable", "string"],
             "policy" => ["required", "accepted"],
+            "hidden" => ["nullable", "prohibited"],
         ];
     }
 

@@ -10,6 +10,12 @@
     <x-slot name="content">
         <form wire:submit.prevent="store" class="space-y-indent-half" id="orderSingleForm">
             <x-tt::notifications.success prefix="single-order-" />
+
+            <div class="m-0 h-0 w-0 overflow-hidden">
+                <input type="text" class="form-control" wire:model="hidden">
+                <x-tt::form.error name="hidden"/>
+            </div>
+
             <div>
                 <label for="singleName" class="inline-block mb-2">
                     Ваше имя<span class="text-danger">*</span>
