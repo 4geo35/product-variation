@@ -116,7 +116,7 @@ class IndexWire extends Component
 
     public function closeDelete(): void
     {
-        $this->displayDelete = true;
+        $this->displayDelete = false;
         $this->resetFields();
     }
 
@@ -170,6 +170,7 @@ class IndexWire extends Component
         try {
             $unitModelClass = config("product-variation.customUnitModel") ?? MeasurementUnit::class;
             $this->authorize($action, $unit ?? $unitModelClass);
+            return true;
         } catch (AuthorizationException $e) {
             session()->flash("unit-error", "Неавторизованное действие");
             $this->closeData();

@@ -6,7 +6,7 @@
 <x-tt::modal.aside wire:model="displayData">
     <x-slot name="title">{{ $stateId ? "Редактировать" : "Добавить" }} статус</x-slot>
     <x-slot name="content">
-        <form wire:submit.prevent="{{ $stateId ? 'update' : 'store' }}" class="space-y-indent-half" id="groupDataForm">
+        <form wire:submit.prevent="{{ $stateId ? 'update' : 'store' }}" class="space-y-indent-half" id="stateDataForm">
             <div>
                 <label for="title" class="inline-block mb-2">
                     Заголовок<span class="text-danger">*</span>
@@ -45,7 +45,7 @@
                 <button type="button" class="btn btn-outline-dark" wire:click="closeData">
                     Отмена
                 </button>
-                <button type="submit" form="groupDataForm" class="btn btn-primary"
+                <button type="submit" form="stateDataForm" class="btn btn-primary"
                         wire:loading.attr="disabled">
                     {{ $stateId ? "Обновить" : "Добавить" }}
                 </button>
