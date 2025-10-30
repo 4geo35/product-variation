@@ -14,6 +14,7 @@ use GIS\ProductVariation\Livewire\Web\Catalog\ChooseVariationWire;
 use GIS\ProductVariation\Livewire\Web\Catalog\OrderSingleVariationWire;
 use GIS\ProductVariation\Livewire\Web\Catalog\ProductTeaserChooseVariationWire;
 use GIS\ProductVariation\Livewire\Web\Catalog\ShowOrderSingleVariationButtonWire;
+use GIS\ProductVariation\Models\MeasurementUnit;
 use GIS\ProductVariation\Models\Order;
 use GIS\ProductVariation\Models\OrderItem;
 use GIS\ProductVariation\Models\OrderState;
@@ -28,6 +29,7 @@ use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use GIS\ProductVariation\Livewire\Admin\ProductVariations\ListWire as AdminVariationListWire;
 use GIS\ProductVariation\Livewire\Admin\OrderStates\IndexWire as AdminOrderStateIndexWire;
+use GIS\ProductVariation\Livewire\Admin\MeasurementUnits\IndexWire as AdminMeasurementUnitIndexWire;
 use GIS\ProductVariation\Livewire\Admin\Orders\IndexWire as AdminOrderIndexWire;
 use GIS\ProductVariation\Livewire\Admin\Orders\InfoWire as AdminOrderInfoWire;
 
@@ -57,6 +59,7 @@ class ProductVariationServiceProvider extends ServiceProvider
         Gate::policy(config("product-variation.customVariationModel") ?? ProductVariation::class, config("product-variation.variationPolicy"));
         Gate::policy(config("product-variation.customOrderStateModel") ?? OrderState::class, config("product-variation.statePolicy"));
         Gate::policy(config("product-variation.customOrderModel") ?? Order::class, config("product-variation.orderPolicy"));
+        Gate::policy(config("product-variation.customUnitModel") ?? MeasurementUnit::class, config("product-variation.unitPolicy"));
     }
 
     protected function initFacades(): void
@@ -152,6 +155,12 @@ class ProductVariationServiceProvider extends ServiceProvider
         Livewire::component(
             "pv-admin-order-states-index",
             $component ?? AdminOrderStateIndexWire::class
+        );
+
+        $component = config("product-variation.customAminUnitIndexComponent");
+        Livewire::component(
+            "pv-admin-measurement-units-index",
+            $component ?? AdminMeasurementUnitIndexWire::class
         );
 
         $component = config("product-variation.customAdminOrderIndexComponent");
