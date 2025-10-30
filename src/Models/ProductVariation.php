@@ -31,6 +31,12 @@ class ProductVariation extends Model implements ProductVariationInterface
         return $this->belongsTo($productModelClass, "product_id");
     }
 
+    public function unit(): BelongsTo
+    {
+        $modelClass = config("product-variation.customUnitModel") ?? MeasurementUnit::class;
+        return $this->belongsTo($modelClass, "unit_id");
+    }
+
     public function items(): HasMany
     {
         $orderItemModelClass = config("product-variation.customOrderItemModel") ?? OrderItem::class;

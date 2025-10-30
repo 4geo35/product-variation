@@ -7,3 +7,7 @@
 Добавить `"./vendor/4geo35/product-variation/src/resources/views/components/**/*.blade.php",
         "./vendor/4geo35/product-variation/src/resources/views/web/**/*.blade.php",
         "./vendor/4geo35/product-variation/src/resources/views/livewire/web/**/*.blade.php",` в `tailwind.config.js`, созданный в пакете `tailwindcss-theme`.
+
+Создать таблицу измерений:
+
+    php artisan migrate

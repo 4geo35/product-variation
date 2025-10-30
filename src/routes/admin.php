@@ -1,5 +1,6 @@
 <?php
 
+use GIS\ProductVariation\Http\Controllers\Admin\UnitController;
 use Illuminate\Support\Facades\Route;
 use GIS\ProductVariation\Http\Controllers\Admin\OrderController;
 use GIS\ProductVariation\Http\Controllers\Admin\OrderStateController;
@@ -21,5 +22,12 @@ Route::middleware(["web", "auth", "app-management"])
             ->group(function () {
                 $orderStateControllerClass = config("product-variation.customAdminOrderStateController") ?? OrderStateController::class;
                 Route::get("/", [$orderStateControllerClass, "index"])->name("index");
+            });
+
+        Route::prefix("measurement-units")
+            ->as("measurement-units.")
+            ->group(function () {
+                $unitControllerClass = config("product-variation.customAdminUnitController") ?? UnitController::class;
+                Route::get("/", [$unitControllerClass, "index"])->name("index");
             });
     });

@@ -16,6 +16,10 @@
             "viewAny",
             config("product-variation.customOrderModel") ?? \GIS\ProductVariation\Models\Order::class
         );
+
+    $unitActive = in_array(Route::currentRouteName(), [
+        "admin.measurement-units.index",
+    ]);
 @endphp
 
 @if ($canViewOrders || $canViewStates)
@@ -36,3 +40,11 @@
         </x-slot>
     </x-tt::admin-menu.item>
 @endif
+
+@can("viewAny", config("product-variation.customUnitModel") ?? \GIS\ProductVariation\Models\MeasurementUnit::class)
+    <x-tt::admin-menu.item href="{{ route('admin.measurement-units.index') }}"
+                           :active="$unitActive">
+        <x-slot name="ico"><x-pv::ico.square-foot /></x-slot>
+        Единицы измерения
+    </x-tt::admin-menu.item>
+@endcan

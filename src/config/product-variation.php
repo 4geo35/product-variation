@@ -37,6 +37,9 @@ return [
     "customVariationModel" => null,
     "customVariationModelObserver" => null,
 
+    "customUnitModel" => null,
+    "customUnitModelObserver" => null,
+
     "customOrderStateModel" => null,
     "customOrderStateModelObserver" => null,
 
@@ -51,6 +54,7 @@ return [
 
     "customAdminOrderController" => null,
     "customAdminOrderStateController" => null,
+    "customAdminUnitController" => null,
 
     // Facades
     "customProductVariationActionsManager" => null,
@@ -81,4 +85,8 @@ return [
     "orderPolicy" => \GIS\ProductVariation\Policies\OrderPolicy::class,
     "orderPolicyKey" => "orders",
     "orderPolicyTitle" => "Управление заказами",
+
+    "unitPolicy" => \GIS\ProductVariation\Policies\MeasurementUnitPolicy::class,
+    "unitPolicyKey" => "measurement_units",
+    "unitPolicyTitle" => "Управление единицами измерения",
 ];

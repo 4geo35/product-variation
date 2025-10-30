@@ -127,6 +127,11 @@ class ProductVariationServiceProvider extends ServiceProvider
             "key" => $pv["orderPolicyKey"],
             "policy" => $pv["orderPolicy"]
         ];
+        $permissions[] = [
+            "title" => $pv["unitPolicyTitle"],
+            "key" => $pv["unitPolicyKey"],
+            "policy" => $pv["unitPolicy"]
+        ];
         app()->config["user-management.permissions"] = $permissions;
 
         // Sort options
