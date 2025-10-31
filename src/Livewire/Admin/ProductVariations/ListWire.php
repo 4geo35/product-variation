@@ -4,14 +4,18 @@ namespace GIS\ProductVariation\Livewire\Admin\ProductVariations;
 
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\ProductVariation\Interfaces\ProductVariationInterface;
+use GIS\ProductVariation\Models\MeasurementUnit;
 use GIS\ProductVariation\Models\ProductVariation;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class ListWire extends Component
 {
     public ProductInterface $product;
+
+    public Collection|null $units = null;
 
     public bool $displayData = false;
     public bool $displayDelete = false;
@@ -21,6 +25,7 @@ class ListWire extends Component
     public bool $sale = false;
     public string $sku = "";
     public string $title = "";
+    public string $unit = "";
 
     public int|null $variationId = null;
 
@@ -33,6 +38,7 @@ class ListWire extends Component
             "price" => ["required", "numeric", "min:0"],
             "oldPrice" => ["nullable", "numeric", "min:0"],
             "sku" => ["nullable", "string", "max:150", $uniqueCondition],
+            "unit" => ["nullable", "exists:measurement_units,id"],
         ];
     }
 
@@ -43,12 +49,14 @@ class ListWire extends Component
             "oldPrice" => "Цена без скидки",
             "sku" => "SKU",
             "title" => "Заголовок",
+            "unit" => "Единица измерения"
         ];
     }
 
     public function render(): View
     {
         $variations = $this->product->variations()
+            ->with("unit:id,title")
             ->orderBy("sku")
             ->get();
         return view("pv::livewire.admin.product-variations.list-wire", compact("variations"));
@@ -66,6 +74,7 @@ class ListWire extends Component
         if (! $this->checkAuth("create")) { return; }
 
         $this->displayData = true;
+        $this->setUnits();
     }
 
     public function store(): void
@@ -79,6 +88,7 @@ class ListWire extends Component
             "sale" => $this->sale ? now() : null,
             "sku" => $this->sku,
             "title" => $this->title,
+            "unit_id" => $this->unit ?? null,
         ]);
 
         session()->flash("variation-success", "Вариация успешно добавлена");
@@ -98,8 +108,10 @@ class ListWire extends Component
         $this->sale = (bool) $variation->sale;
         $this->sku = $variation->sku;
         $this->title = $variation->title;
+        $this->unit = $variation->unit_id ?? "";
 
         $this->displayData = true;
+        $this->setUnits();
     }
 
     public function update(): void
@@ -115,6 +127,7 @@ class ListWire extends Component
             "sale" => $this->sale ? now() : null,
             "sku" => $this->sku,
             "title" => $this->title,
+            "unit_id" => empty($this->unit) ? null : $this->unit,
         ]);
 
         session()->flash("variation-success", "Вариация успешно обновлена");
@@ -164,6 +177,16 @@ class ListWire extends Component
         $variation->update([
             "published_at" => $variation->published_at ? null : now(),
         ]);
+    }
+
+    protected function setUnits(): void
+    {
+        $modelClass = config("product-variation.customUnitModel") ?? MeasurementUnit::class;
+        $this->units = $modelClass::query()
+            ->select("id", "title")
+            ->orderBy("title")
+            ->get();
+        if (! $this->units->count()) { $this->units = null; }
     }
 
     protected function findModel(): ?ProductVariationInterface

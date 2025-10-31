@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "defaultMeasurement" => "шт.",
+
     // Order settings
     "orderNumberHasLetter" => true,
     "orderDigitsLength" => 8,

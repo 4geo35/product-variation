@@ -22,7 +22,8 @@ class ProductVariation extends Model implements ProductVariationInterface
         "old_price",
         "sale",
         "published_at",
-        "title"
+        "title",
+        "unit_id",
     ];
 
     public function product(): BelongsTo

@@ -22,6 +22,19 @@
             </div>
 
             <div>
+                <div class="inline-block mb-2">Единица измерения</div>
+                @isset($units)
+                    <select class="form-select {{ $errors->has('unit') ? 'border-danger' : '' }}" wire:model="unit">
+                        <option value="">Выберите...</option>
+                        @foreach($units as $unit)
+                            <option value="{{ $unit->id }}">{{ $unit->title }}</option>
+                        @endforeach
+                    </select>
+                    <x-tt::form.error name="unit"/>
+                @endisset
+            </div>
+
+            <div>
                 <label for="variationPrice" class="inline-block mb-2">
                     Цена<span class="text-danger">*</span>
                 </label>

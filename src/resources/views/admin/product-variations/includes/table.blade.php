@@ -8,6 +8,9 @@
                 <span class="text-nowrap">Заголовок</span>
             </x-tt::table.heading>
             <x-tt::table.heading class="text-left">
+                <span class="text-nowrap">Ед. изм.</span>
+            </x-tt::table.heading>
+            <x-tt::table.heading class="text-left">
                 <span class="text-nowrap">Цена</span>
             </x-tt::table.heading>
             <x-tt::table.heading class="text-left">
@@ -24,6 +27,7 @@
             <tr>
                 <td>{{ $item->sku }}</td>
                 <td>{{ $item->title }}</td>
+                <td>{{ $item->unit_id ? $item->unit->title : config("product-variation.defaultMeasurement") }}</td>
                 <td>{{ $item->human_price }}</td>
                 <td>{{ $item->human_old_price }}</td>
                 <td>{{ $item->sale ? "Активна" : "Неактивна" }}</td>

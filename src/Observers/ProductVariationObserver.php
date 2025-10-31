@@ -23,7 +23,7 @@ class ProductVariationObserver
 
     public function updating(ProductVariationInterface $variation): void
     {
-        $variation->fixSku();
+        $variation->fixSku(true);
     }
 
     public function updated(ProductVariationInterface $variation): void
