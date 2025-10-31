@@ -24,6 +24,7 @@ class ProductTeaserChooseVariationWire extends Component
 
     public function render(): View
     {
+        debugbar()->info($this->variation);
         return view("pv::livewire.web.catalog.product-teaser-choose-variation-wire");
     }
 

@@ -56,6 +56,14 @@ class ProductVariation extends Model implements ProductVariationInterface
         }
     }
 
+    public function getUnitTextAttribute(): string
+    {
+        if (! $this->unit_id) {
+            return config("product-variation.defaultMeasurement");
+        }
+        return $this->unit->title;
+    }
+
     public function getHumanPriceAttribute(): string
     {
         if ($this->price - intval($this->price) > 0)

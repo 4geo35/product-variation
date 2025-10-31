@@ -3,7 +3,9 @@
 <div class="{{ $moreVariations >= 0 ? 'mt-indent-half' : '' }}">
     @if ($variation)
         <div class="flex flex-wrap items-end">
-            <div class="text-lg lg:text-2xl font-semibold mr-indent-half lg:mb-1.5">{{ $variation->human_price }} р.</div>
+            <div class="text-lg lg:text-2xl font-semibold mr-indent lg:mb-1.5">
+                {{ $variation->human_price }} р. <span class="text-body/60 text-sm">/ {{ $variation->unit_text }}</span>
+            </div>
             @if ($variation->sale)
                 <div class="lg:text-lg font-medium text-body/60 line-through lg:mb-1.5">{{ $variation->human_old_price }} р.</div>
             @endif
