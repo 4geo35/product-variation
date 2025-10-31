@@ -11,7 +11,16 @@
         @foreach($units as $item)
             <tr>
                 <td>{{ $item->title }}</td>
-                <td>{{ $item->variations->count() }}</td>
+                <td>
+                    @if ($item->variations->count())
+                        <button type="button" class="text-primary hover:text-primary-hover cursor-pointer"
+                                wire:click="showList({{ $item->id }})">
+                            Список ({{ $item->variations->count() }})
+                        </button>
+                    @else
+                        <span class="text-nowrap">Нет привязанных цен</span>
+                    @endif
+                </td>
                 <td>
                     <div class="flex justify-center">
                         <button type="button" class="btn btn-dark px-btn-x-ico rounded-e-none"

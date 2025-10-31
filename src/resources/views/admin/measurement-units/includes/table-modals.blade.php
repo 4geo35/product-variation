@@ -31,3 +31,25 @@
         </form>
     </x-slot>
 </x-tt::modal.aside>
+
+<x-tt::modal.aside wire:model="displayList">
+    <x-slot name="title">Список цен</x-slot>
+    <x-slot name="content">
+        @if ($variations && $variations->count())
+            <ul class="space-y-indent-half">
+                @foreach($variations as $variation)
+                    <li class="flex flex-col space-y-1">
+                        <span>{{ $variation->title }}</span>
+                        <a href="{{ route('admin.products.show', ['product' => $variation->product]) }}"
+                           target="_blank"
+                           class="text-primary hover:text-primary-hover">
+                            {{ $variation->product->title }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        @else
+            <div>Список пуст</div>
+        @endif
+    </x-slot>
+</x-tt::modal.aside>

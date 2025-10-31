@@ -6,6 +6,7 @@ use GIS\ProductVariation\Interfaces\MeasurementUnitInterface;
 use GIS\ProductVariation\Models\MeasurementUnit;
 use GIS\TraitsHelpers\Facades\BuilderActions;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -15,10 +16,13 @@ class IndexWire extends Component
 
     public bool $displayData = false;
     public bool $displayDelete = false;
+    public bool $displayList = false;
 
     public string $title = "";
 
     public int|null $unitId = null;
+
+    public Collection|null $variations = null;
 
     protected function queryString(): array
     {
@@ -48,9 +52,10 @@ class IndexWire extends Component
     {
         $modelClass = config("product-variation.customUnitModel") ?? MeasurementUnit::class;
         $query = $modelClass::query()
-            ->with("variations:id");
+            ->with("variations:id,unit_id");
         BuilderActions::extendLike($query, $this->searchTitle, "title");
         $units = $query->orderBy("title")->get();
+        debugbar()->info($units);
         return view("pv::livewire.admin.measurement-units.index-wire", compact("units"));
     }
 
@@ -145,6 +150,21 @@ class IndexWire extends Component
         $unit->delete();
         session()->flash("unit-success", "Единица измерения успешно удалена");
         $this->closeDelete();
+    }
+
+    public function showList(int $unitId): void
+    {
+        $this->resetFields();
+        $this->unitId = $unitId;
+        $unit = $this->findModel();
+        if (! $unit) return;
+        if (! $this->checkAuth("viewAny", $unit)) { return; }
+        $this->displayList = true;
+
+        $this->variations = $unit->variations()
+            ->with("product")
+            ->orderBy("title")
+            ->get();
     }
 
     protected function findModel(): ?MeasurementUnitInterface
