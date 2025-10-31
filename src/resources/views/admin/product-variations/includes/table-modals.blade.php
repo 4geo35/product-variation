@@ -66,6 +66,17 @@
             </div>
 
             <div>
+                <label for="variationMinimalOrder" class="inline-block mb-2">
+                    Минимальный заказ
+                </label>
+                <input type="number" id="variationMinimalOrder" min="2"
+                       class="form-control {{ $errors->has("minimalOrder") ? "border-danger" : "" }}"
+                       wire:loading.attr="disabled"
+                       wire:model="minimalOrder">
+                <x-tt::form.error name="minimalOrder"/>
+            </div>
+
+            <div>
                 <label for="variationSku" class="inline-block mb-2">
                     Артикул
                 </label>

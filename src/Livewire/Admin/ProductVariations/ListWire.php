@@ -26,6 +26,7 @@ class ListWire extends Component
     public string $sku = "";
     public string $title = "";
     public string $unit = "";
+    public int|null $minimalOrder = null;
 
     public int|null $variationId = null;
 
@@ -39,6 +40,7 @@ class ListWire extends Component
             "oldPrice" => ["nullable", "numeric", "min:0"],
             "sku" => ["nullable", "string", "max:150", $uniqueCondition],
             "unit" => ["nullable", "exists:measurement_units,id"],
+            "minimalOrder" => ["nullable", "numeric", "min:2"],
         ];
     }
 
@@ -49,7 +51,8 @@ class ListWire extends Component
             "oldPrice" => "Цена без скидки",
             "sku" => "SKU",
             "title" => "Заголовок",
-            "unit" => "Единица измерения"
+            "unit" => "Единица измерения",
+            "minimalOrder" => "Минимальный заказ",
         ];
     }
 
@@ -89,6 +92,7 @@ class ListWire extends Component
             "sku" => $this->sku,
             "title" => $this->title,
             "unit_id" => $this->unit ?? null,
+            "minimalOrder" => $this->minimalOrder,
         ]);
 
         session()->flash("variation-success", "Вариация успешно добавлена");
@@ -109,6 +113,7 @@ class ListWire extends Component
         $this->sku = $variation->sku;
         $this->title = $variation->title;
         $this->unit = $variation->unit_id ?? "";
+        $this->minimalOrder = $variation->minimal_order;
 
         $this->displayData = true;
         $this->setUnits();
@@ -128,6 +133,7 @@ class ListWire extends Component
             "sku" => $this->sku,
             "title" => $this->title,
             "unit_id" => empty($this->unit) ? null : $this->unit,
+            "minimal_order" => $this->minimalOrder,
         ]);
 
         session()->flash("variation-success", "Вариация успешно обновлена");
@@ -204,7 +210,7 @@ class ListWire extends Component
 
     protected function resetFields(): void
     {
-        $this->reset(["variationId", "price", "oldPrice", "sale", "sku", "title"]);
+        $this->reset(["variationId", "price", "oldPrice", "sale", "sku", "title", "minimalOrder", "unit"]);
     }
 
     protected function checkAuth(string $action, ProductVariationInterface $variation = null): bool

@@ -19,6 +19,9 @@
             <x-tt::table.heading class="text-left">
                 <span class="text-nowrap">Скидка</span>
             </x-tt::table.heading>
+            <x-tt::table.heading class="text-left">
+                <span class="text-nowrap">Мин. заказ</span>
+            </x-tt::table.heading>
             <x-tt::table.heading>Действия</x-tt::table.heading>
         </tr>
     </x-slot>
@@ -31,6 +34,7 @@
                 <td>{{ $item->human_price }}</td>
                 <td>{{ $item->human_old_price }}</td>
                 <td>{{ $item->sale ? "Активна" : "Неактивна" }}</td>
+                <td>{{ $item->minimal_order ?? "-" }}</td>
                 <td>
                     <div class="flex justify-center">
                         <button type="button" class="btn btn-dark px-btn-x-ico rounded-e-none"

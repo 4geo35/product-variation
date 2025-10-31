@@ -21,6 +21,7 @@ class ProductVariation extends Model implements ProductVariationInterface
         "price",
         "old_price",
         "sale",
+        "minimal_order",
         "published_at",
         "title",
         "unit_id",
