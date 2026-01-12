@@ -91,7 +91,7 @@ class ListWire extends Component
             "sale" => $this->sale ? now() : null,
             "sku" => $this->sku,
             "title" => $this->title,
-            "unit_id" => $this->unit ?? null,
+            "unit_id" => empty($this->unit) ? null : $this->unit,
             "minimalOrder" => $this->minimalOrder,
         ]);
 
