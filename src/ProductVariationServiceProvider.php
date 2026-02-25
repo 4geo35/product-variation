@@ -38,7 +38,6 @@ class ProductVariationServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->loadMigrationsFrom(__DIR__ . "/database/migrations");
-        $this->loadRoutesFrom(__DIR__ . "/routes/admin.php");
         $this->mergeConfigFrom(__DIR__ . "/config/product-variation.php", "product-variation");
         $this->initFacades();
         $this->bindInterfaces();
@@ -47,10 +46,11 @@ class ProductVariationServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadViewsFrom(__DIR__ . "/resources/views", "pv");
-        $this->addLivewireComponents();
+        $this->loadRoutesFrom(__DIR__ . "/routes/admin.php");
         $this->expandConfiguration();
         $this->observeModels();
         $this->setPolicies();
+        $this->addLivewireComponents();
         $this->listenEvents();
     }
 
