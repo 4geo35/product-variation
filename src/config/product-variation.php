@@ -34,6 +34,7 @@ return [
 
     // Listeners
     "customNewOrderListener" => null,
+    "customRemoveVariationFromOrderItemListener" => null,
 
     // Admin
     "customVariationModel" => null,

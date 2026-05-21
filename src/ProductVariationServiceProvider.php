@@ -3,10 +3,12 @@
 namespace GIS\ProductVariation;
 
 use GIS\ProductVariation\Events\CreateNewOrderEvent;
+use GIS\ProductVariation\Events\VariationDeletedEvent;
 use GIS\ProductVariation\Helpers\OrderActionsManager;
 use GIS\ProductVariation\Helpers\ProductVariationActionsManager;
 use GIS\ProductVariation\Interfaces\OrderInterface;
 use GIS\ProductVariation\Interfaces\ProductVariationInterface;
+use GIS\ProductVariation\Listeners\RemoveVariationFromOrderItemListener;
 use GIS\ProductVariation\Listeners\SendNewOrderNotifyListener;
 use GIS\ProductVariation\Livewire\Admin\Orders\ManageCustomerWire;
 use GIS\ProductVariation\Livewire\Admin\Orders\MangeItemsWire;
@@ -88,6 +90,9 @@ class ProductVariationServiceProvider extends ServiceProvider
     {
         $listenerClass = config("product-variation.customNewOrderListener") ?? SendNewOrderNotifyListener::class;
         Event::listen(CreateNewOrderEvent::class, $listenerClass);
+
+        $listenerClass = config("product-variation.customRemoveVariationFromOrderItemListener") ?? RemoveVariationFromOrderItemListener::class;
+        Event::listen(VariationDeletedEvent::class, $listenerClass);
     }
 
     protected function observeModels(): void
