@@ -28,8 +28,11 @@ class ProductVariationObserver
 
     public function updated(ProductVariationInterface $variation): void
     {
-        if ($variation->wasChanged(["published_at", "sale", "price", "old_price"])) {
+        if ($variation->wasChanged(["published_at", "price"])) {
             $this->forgetPriceCache($variation);
+        }
+        if ($variation->wasChanged("published_at") && ! $variation->published_at) {
+            $variation->carts()->detach();
         }
     }
 
@@ -37,6 +40,7 @@ class ProductVariationObserver
     {
         $this->forgetPriceCache($variation);
 
+        $variation->carts()->detach();
         foreach ($variation->items as $item) {
             /**
              * @var OrderItemInterface $item
