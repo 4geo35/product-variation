@@ -6,6 +6,7 @@ use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\ProductVariation\Events\VariationDeletedEvent;
+use GIS\ProductVariation\Events\VariationUnpublishedEvent;
 use GIS\ProductVariation\Facades\ProductVariationActions;
 use GIS\ProductVariation\Interfaces\OrderItemInterface;
 use GIS\ProductVariation\Interfaces\ProductVariationInterface;
@@ -33,7 +34,7 @@ class ProductVariationObserver
             $this->forgetPriceCache($variation);
         }
         if ($variation->wasChanged("published_at") && ! $variation->published_at) {
-            $variation->carts()->detach();
+            VariationUnpublishedEvent::dispatch($variation);
         }
     }
 
