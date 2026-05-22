@@ -6,6 +6,7 @@ use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\ProductVariation\Events\VariationDeletedEvent;
+use GIS\ProductVariation\Events\VariationMinimalOrderChangedEvent;
 use GIS\ProductVariation\Events\VariationPriceChangedEvent;
 use GIS\ProductVariation\Events\VariationUnpublishedEvent;
 use GIS\ProductVariation\Facades\ProductVariationActions;
@@ -39,6 +40,9 @@ class ProductVariationObserver
         }
         if ($variation->wasChanged(["price", "sale", "old_price"])) {
             VariationPriceChangedEvent::dispatch($variation);
+        }
+        if ($variation->wasChanged("minimal_order") && ! empty($variation->minimal_order)) {
+            VariationMinimalOrderChangedEvent::dispatch($variation);
         }
     }
 
