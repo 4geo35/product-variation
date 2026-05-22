@@ -6,6 +6,7 @@ use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\ProductVariation\Events\VariationDeletedEvent;
+use GIS\ProductVariation\Events\VariationPriceChangedEvent;
 use GIS\ProductVariation\Events\VariationUnpublishedEvent;
 use GIS\ProductVariation\Facades\ProductVariationActions;
 use GIS\ProductVariation\Interfaces\OrderItemInterface;
@@ -30,11 +31,14 @@ class ProductVariationObserver
 
     public function updated(ProductVariationInterface $variation): void
     {
-        if ($variation->wasChanged(["published_at", "price"])) {
+        if ($variation->wasChanged(["published_at", "price", "sale", "old_price"])) {
             $this->forgetPriceCache($variation);
         }
         if ($variation->wasChanged("published_at") && ! $variation->published_at) {
             VariationUnpublishedEvent::dispatch($variation);
+        }
+        if ($variation->wasChanged(["price", "sale", "old_price"])) {
+            VariationPriceChangedEvent::dispatch($variation);
         }
     }
 
