@@ -8,6 +8,7 @@ use GIS\ProductVariation\Models\ProductVariation;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProductVariationActionsManager
 {
@@ -39,7 +40,13 @@ class ProductVariationActionsManager
         $key = "product-filter-getPricesForCategory:{$category->id}";
         Cache::forget("$key-true");
         Cache::forget("$key-false");
-        if ($category->parent_id) $this->forgetPricesForCategory($category->parent);
+        if ($category->parent_id) {
+            if (empty($category->parent)) {
+                Log::error("Parent category model doesn't exist, by id {$category->parent_id}. Need to manually clear prices cache");
+                return;
+            }
+            $this->forgetPricesForCategory($category->parent);
+        }
     }
 
     public function getPriceQuery(array $range, bool $needBetween = true): Builder
