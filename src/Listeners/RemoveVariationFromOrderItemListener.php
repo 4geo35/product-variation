@@ -6,6 +6,7 @@ use GIS\ProductVariation\Events\VariationDeletedEvent;
 use GIS\ProductVariation\Interfaces\OrderItemInterface;
 use GIS\ProductVariation\Models\OrderItem;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 
 class RemoveVariationFromOrderItemListener implements ShouldQueue
 {
@@ -22,7 +23,9 @@ class RemoveVariationFromOrderItemListener implements ShouldQueue
              * @var OrderItemInterface $orderItem
              */
             $orderItem->variation()->dissociate();
-            $orderItem->save();
+            try {
+                $orderItem->save();
+            } catch (\Exception $e) { Log::error(self::class . " : " . $e->getMessage()); }
         }
     }
 }

@@ -2,12 +2,15 @@
 
 namespace GIS\ProductVariation;
 
+use GIS\CategoryProduct\Events\ProductDeletedEvent;
 use GIS\ProductVariation\Events\CreateNewOrderEvent;
 use GIS\ProductVariation\Events\VariationDeletedEvent;
 use GIS\ProductVariation\Helpers\OrderActionsManager;
 use GIS\ProductVariation\Helpers\ProductVariationActionsManager;
 use GIS\ProductVariation\Interfaces\OrderInterface;
 use GIS\ProductVariation\Interfaces\ProductVariationInterface;
+use GIS\ProductVariation\Listeners\DeleteProductVariationsOnProductDeletedListener;
+use GIS\ProductVariation\Listeners\RemoveProductFromOrderItemOnProductDeletedListener;
 use GIS\ProductVariation\Listeners\RemoveVariationFromOrderItemListener;
 use GIS\ProductVariation\Listeners\SendNewOrderNotifyListener;
 use GIS\ProductVariation\Livewire\Admin\Orders\ManageCustomerWire;
@@ -93,6 +96,12 @@ class ProductVariationServiceProvider extends ServiceProvider
 
         $listenerClass = config("product-variation.customRemoveVariationFromOrderItemListener") ?? RemoveVariationFromOrderItemListener::class;
         Event::listen(VariationDeletedEvent::class, $listenerClass);
+
+        $listenerClass = config("product-variation.customRemoveProductFromOrderItemOnProductDeletedListener") ?? RemoveProductFromOrderItemOnProductDeletedListener::class;
+        Event::listen(ProductDeletedEvent::class, $listenerClass);
+
+        $listenerClass = config("product-variation.customDeleteProductVariationsOnProductDeletedListener") ?? DeleteProductVariationsOnProductDeletedListener::class;
+        Event::listen(ProductDeletedEvent::class, $listenerClass);
     }
 
     protected function observeModels(): void
