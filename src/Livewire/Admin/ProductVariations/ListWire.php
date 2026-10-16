@@ -213,7 +213,7 @@ class ListWire extends Component
         $this->reset(["variationId", "price", "oldPrice", "sale", "sku", "title", "minimalOrder", "unit"]);
     }
 
-    protected function checkAuth(string $action, ProductVariationInterface $variation = null): bool
+    protected function checkAuth(string $action, ?ProductVariationInterface $variation = null): bool
     {
         try {
             $variationModelClass = config("product-variation.customVariationModel") ?? ProductVariation::class;

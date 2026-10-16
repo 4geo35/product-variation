@@ -185,7 +185,7 @@ class IndexWire extends Component
         $this->reset(["stateId", "title", "slug", "key"]);
     }
 
-    protected function checkAuth(string $action, OrderStateInterface $state = null): bool
+    protected function checkAuth(string $action, ?OrderStateInterface $state = null): bool
     {
         try {
             $stateModelClass = config("product-variation.customOrderStateModel") ?? OrderState::class;

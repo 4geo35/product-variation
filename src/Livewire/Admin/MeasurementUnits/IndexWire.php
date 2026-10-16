@@ -185,7 +185,7 @@ class IndexWire extends Component
         $this->reset(["title", "unitId"]);
     }
 
-    protected function checkAuth(string $action, MeasurementUnitInterface $unit = null): bool
+    protected function checkAuth(string $action, ?MeasurementUnitInterface $unit = null): bool
     {
         try {
             $unitModelClass = config("product-variation.customUnitModel") ?? MeasurementUnit::class;
